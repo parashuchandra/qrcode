@@ -34,45 +34,4 @@ public class WelcomeController {
 		model.put("message", this.message);
 		return "welcome";
 	}
-
-	@RequestMapping("/qr")
-	public String qr(Map<String, Object> model) throws FileNotFoundException{
-		try
-		{
-			Document document = new Document();
-			PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream("HelloWorld.pdf"));
-
-			document.open();
-			PdfContentByte pdfContentByte = pdfWriter.getDirectContent();
-
-			Barcode128 barcode128 = new Barcode128();
-			barcode128.setCode("Parashuram");
-			barcode128.setCodeType(Barcode128.CODE128);
-			Image code128Image = barcode128.createImageWithBarcode(pdfContentByte, null, null);
-			code128Image.setAbsolutePosition(10, 700);
-			code128Image.scalePercent(100);
-			document.add(code128Image);
-
-			BarcodeQRCode barcodeQrcode = new BarcodeQRCode("Parashuram", 1, 1, null);
-			Image qrcodeImage = barcodeQrcode.getImage();
-			qrcodeImage.setAbsolutePosition(20, 500);
-			qrcodeImage.scalePercent(100);
-			document.add(qrcodeImage);
-
-			document.close();
-			return document.toString();
-		}
-		catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		catch (DocumentException e)
-		{
-			e.printStackTrace();
-		}
-        model.put("message", this.message);
-		return "welcome";
-	}
-
-
 }
